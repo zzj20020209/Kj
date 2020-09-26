@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.GysDao">
+	<select id="gyscx" parameterType="com.zzj.vo.Gys" resultType="com.zzj.vo.Gys">
+		SELECT * from gysb
+		<where>
+			<if test="gname!=null"> and gname like  concat('%',#{gname},'%')</if>
+			and zt=0
+		</where>
+	</select>
+
+	<select id="gyscxfy" parameterType="com.zzj.vo.Gys" resultType="int">
+		select count(*) from gysb
+		<where>
+			<if test="gname!=null"> and gname like  concat('%',#{gname},'%')</if>
+			and zt=0
+		</where>
+	</select>
+	<update id="gysdel" parameterType="int">
+		update gysb set zt=1 where gid=#{gid}
+	</update>
+	<update id="gysdelsp" parameterType="int">
+		update spb set zt=1 where gid=#{gid}
+	</update>
+	<insert id="gysadd" parameterType="Gys">
+		insert into gysb values(#{gid},#{gname},#{gyx},#{gsdz},#{gsdh},0)
+	</insert>
+	<select id="gysidcx" parameterType="int" resultType="Gys">
+		SELECT * FROM gysb where gid=#{gid} and zt=0
+	</select>
+	<update id="gysxg" parameterType="Gys">
+		update gysb set gname=#{gname},gyx=#{gyx},gsdz=#{gsdz},gsdh=#{gsdh} where gid=#{gid}
+	</update>
+</mapper>

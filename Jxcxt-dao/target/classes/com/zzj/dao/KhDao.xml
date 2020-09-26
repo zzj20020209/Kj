@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.KhDao">
+	<select id="khcx" parameterType="com.zzj.vo.Kh" resultType="com.zzj.vo.Kh">
+		SELECT * from khb
+		<where>
+			<if test="khname!=null"> and khname like  concat('%',#{khname},'%')</if>
+			and zt=0
+		</where>
+	</select>
+	<select id="khcxfy" parameterType="com.zzj.vo.Kh" resultType="int">
+		select count(*) from khb
+		<where>
+			<if test="khname!=null"> and khname like  concat('%',#{khname},'%')</if>
+			and zt=0
+		</where>
+	</select>
+	<insert id="addkh" parameterType="Kh">
+		insert into khb values(null,#{khname},#{khyx},#{khgsdz},#{khgsdh},#{lxr},#{lxrdh},0)
+	</insert>
+	<update id="khsc" parameterType="int">
+		update khb set zt=1 where khid=#{khid}
+	</update>
+	<select id="ckkhid" parameterType="int" resultType="Kh">
+		select * from khb where khid=#{khid}
+	</select>
+	<update id="xgkh" parameterType="Kh">
+		update khb set khname=#{khname},khyx=#{khyx},khgsdz=#{khgsdz},khgsdh=#{khgsdh},lxr=#{lxr},lxrdh=#{lxrdh} where khid=#{khid}
+	</update>
+</mapper>

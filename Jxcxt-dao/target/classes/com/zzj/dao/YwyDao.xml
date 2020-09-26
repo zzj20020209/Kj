@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.YwyDao">
+	<select id="ywycx" parameterType="com.zzj.vo.Ywy" resultType="com.zzj.vo.Ywy">
+		SELECT * from ywyb
+		<where>
+			<if test="ywyname!=null"> and ywyname like  concat('%',#{ywyname},'%')</if>
+			and zt=0
+		</where>
+	</select>
+
+	<select id="ywycxfy" parameterType="com.zzj.vo.Ywy" resultType="int">
+		select count(*) from ywyb
+		<where>
+			<if test="ywyname!=null"> and ywyname like  concat('%',#{ywyname},'%')</if>
+			and zt=0
+		</where>
+	</select>
+	<update id="ywydel" parameterType="int">
+		update ywyb set zt=1 where ywyid=#{ywyid}
+	</update>
+	<insert id="ywyadd" parameterType="Ywy">
+		insert into ywyb values(#{ywyid},#{ywyname},#{ywyage},#{ywysex},0)
+	</insert>
+	<select id="ywyidcx" parameterType="int" resultType="Ywy">
+		SELECT * FROM ywyb  where ywyid=#{ywyid} and zt=0
+	</select>
+	<!--<select id="splx" parameterType="com.zzj.vo.Splx" resultType="Splx">
+		select * from splxb
+	</select>
+	<select id="spcd" parameterType="com.zzj.vo.Spcd" resultType="Spcd">
+		select * from spcdb
+	</select>
+	<update id="spdel" parameterType="int">
+		update spb set zt=1 where spid=#{spid}
+	</update>
+	<insert id="spadd" parameterType="Shangping">
+		insert into spb values(null,#{spname},#{spcd},#{text},#{spscph},#{spms},#{price},0)
+	</insert>-->
+</mapper>

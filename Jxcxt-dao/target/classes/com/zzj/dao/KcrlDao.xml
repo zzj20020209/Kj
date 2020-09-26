@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.KcrlDao">
+	<select id="kcrlcx" parameterType="Kcrlb" resultType="Kcrlb">
+		SELECT id,ck.kcname,spname,sl FROM kcrlb kc INNER JOIN kcb ck ON kc.kid=ck.kid
+		<where>
+			<if test="spname!=null">and spname like  concat('%',#{spname},'%')</if>
+		</where>
+	</select>
+	<select id="kcrlcxfy" parameterType="com.zzj.vo.Kcrlb" resultType="int">
+		SELECT count(*) FROM kcrlb kc INNER JOIN kcb ck ON kc.kid=ck.kid
+		<where>
+			<if test="spname!=null">and spname like  concat('%',#{spname},'%')</if>
+		</where>
+	</select>
+	<select id="ddbcxs" parameterType="int" resultType="com.zzj.vo.Ddb">
+		SELECT d.ddid,s.spname,d.spjg,d.spsl FROM ddb d INNER JOIN spb s ON d.spid=s.spid where cgddid=#{cgddid}
+	</select>
+	<insert id="kcrladd" parameterType="Kcrlb">
+		insert into kcrlb values(null,#{kid},#{spname},#{sl})
+	</insert>
+	<select id="cxkid" parameterType="int" resultType="Kcrlb">
+		SELECT id,ck.kcname,spname,sl FROM kcrlb kc INNER JOIN kcb ck ON kc.kid=ck.kid WHERE kc.kid=#{kid}
+	</select>
+	<update id="sqrk" parameterType="int">
+		update cgljb set rkzt=1 where cgddid=#{cgddid}
+	</update>
+	<update id="xgspsl" parameterType="Kcrlb">
+		update kcrlb set sl=sl+#{sl} where spname=#{spname} and kid=#{kid}
+	</update>
+	<select id="idcxs" parameterType="int" resultType="Cglj">
+		select * from cgljb where cgddid=#{cgddid}
+	</select>
+</mapper>

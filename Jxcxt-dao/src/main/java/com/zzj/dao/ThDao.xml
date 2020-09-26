@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.ThDao">
+	<select id="cgdcx" parameterType="com.zzj.vo.Cglj" resultType="com.zzj.vo.Cglj">
+		SELECT * FROM cgljb WHERE cgzt=2
+	</select>
+
+	<select id="cgdcxsy" parameterType="com.zzj.vo.Cglj" resultType="int">
+		select count(*) from cgljb WHERE cgzt=2
+	</select>
+</mapper>

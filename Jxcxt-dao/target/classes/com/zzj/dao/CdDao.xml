@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.CdDao">
+	<select id="cx" parameterType="int" resultType="com.zzj.vo.Cd">
+		SELECT * FROM cdb WHERE zid=#{zid} AND id IN
+		(SELECT cid FROM qxb q INNER JOIN
+		ygjsb yj ON q.jid=yj.jid INNER JOIN
+		jsb js ON js.jid=yj.jid INNER JOIN
+		ygb yg ON yg.yid=yj.yid
+		WHERE yg.yid=#{yid})
+	</select>
+
+	<select id="cxjid" parameterType="int" resultType="Cd">
+		SELECT m.* FROM cdb m
+		LEFT JOIN qxb p
+		ON m.id = p.cid
+		WHERE p.jid =#{jid}
+	</select>
+	<select id="kscd" parameterType="int" resultType="Cd">
+		select * from cdb where zid=#{zid}
+	</select>
+</mapper>

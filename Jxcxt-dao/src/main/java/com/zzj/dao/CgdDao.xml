@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.CgdDao">
+	<select id="cgdcx" parameterType="com.zzj.vo.Cglj" resultType="com.zzj.vo.Cglj">
+		SELECT * FROM cgljb WHERE zt=1
+	</select>
+
+	<select id="cgdcxsy" parameterType="com.zzj.vo.Cglj" resultType="int">
+		select count(*) from cgljb WHERE zt=1
+	</select>
+
+	<select id="csl" parameterType="int" resultType="Cglj">
+		SELECT SUM(spsl) FROM ddb WHERE cgddid=#{cgddid}
+	</select>
+	<update id="cgdjh" parameterType="int">
+		update cgljb set cgzt=1 where cgddid=#{cgddid}
+	</update>
+	<select id="rksqcx" parameterType="Cglj" resultType="Cglj">
+		SELECT * FROM cgljb where cgzt=1
+	</select>
+	<select id="cxdg" parameterType="int" resultType="Cglj">
+		select * from cgljb where cgddid=#{cgddid}
+	</select>
+	<select id="rksqcxsy" parameterType="Cglj" resultType="int">
+		SELECT count(*) FROM cgljb where cgzt=1
+	</select>
+
+	<update id="cgdth" parameterType="int">
+		update cgljb set cgzt=2 where cgddid=#{cgddid}
+	</update>
+</mapper>

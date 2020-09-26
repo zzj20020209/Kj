@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.YgjsDao">
+	<select id="ygjscx" parameterType="com.zzj.vo.Ygjs" resultType="com.zzj.vo.Ygjs">
+		SELECT yj.id,yg.yname,js.jname FROM ygjsb yj INNER JOIN ygb yg ON yj.yid=yg.yid INNER JOIN jsb js ON yj.jid=js.jid
+		<where>
+			<if test="yname!=null"> and yname like  concat('%',#{yname},'%')</if>
+		</where>
+	</select>
+
+	<select id="ygjscxsy" parameterType="com.zzj.vo.Ygjs" resultType="int">
+		select count(*) from ygjsb yj INNER JOIN ygb yg ON yj.yid=yg.yid INNER JOIN jsb js ON yj.jid=js.jid
+		<where>
+			<if test="yname!=null"> and yname like  concat('%',#{yname},'%')</if>
+		</where>
+	</select>
+	<select id="ygjscxid" parameterType="int" resultType="Ygjs">
+		SELECT yj.id,yg.yname,js.jname,js.jid FROM ygjsb yj INNER JOIN ygb yg ON yj.yid=yg.yid INNER JOIN jsb js ON yj.jid=js.jid where yj.yid=#{yid}
+	</select>
+	<insert id="ygjsadd" parameterType="Ygjs">
+		insert into ygjsb values(null,#{yid},#{jid})
+	</insert>
+	<delete id="ygjsdel" parameterType="int">
+		delete from ygjsb where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.JueseDao">
+	<select id="jscxsy" parameterType="int" resultType="com.zzj.vo.Juese">
+		select * from jsb
+	</select>
+
+	<select id="jsidcx" parameterType="int" resultType="Juese">
+		select r.* from jsb r
+		left join ygjsb ur
+		on r.jid = ur.jid
+		where ur.yid =#{yid}
+	</select>
+
+	<delete id="del" parameterType="int">
+		delete from qxb where jid=#{jid}
+	</delete>
+
+	<insert id="add" parameterType="map">
+		insert into qxb(jid,cid) values(#{jid},#{cid})
+	</insert>
+</mapper>

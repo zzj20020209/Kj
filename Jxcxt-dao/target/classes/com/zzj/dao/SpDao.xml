@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.SpDao">
+	<resultMap id="sp" type="com.zzj.vo.Shangping">
+		<result property="splx" column="id"></result>
+	</resultMap>
+
+	<select id="spcxs" parameterType="Shangping" resultType="Shangping">
+		SELECT s.spid,s.spname,sp.gname,sb.text,s.spscph,s.spms,s.price FROM spb s INNER JOIN splxb sb
+		ON s.text=sb.id INNER JOIN gysb sp ON s.gid=sp.gid where s.zt=0 group by s.spname
+	</select>
+	<select id="spcx" parameterType="com.zzj.vo.Shangping" resultType="com.zzj.vo.Shangping">
+		SELECT s.spid,s.spname,sp.gname,sb.text,s.spscph,s.spms,s.price FROM spb s INNER JOIN splxb sb
+		ON s.text=sb.id INNER JOIN gysb sp ON s.gid=sp.gid
+		<where>
+			<if test="spname!=null"> and spname like  concat('%',#{spname},'%')</if>
+			<if test="splx!=0 and splx!=null"> and s.text = #{splx}</if>
+			and s.zt=0
+		</where>
+		group by s.spname
+	</select>
+
+	<select id="spcxsy" parameterType="com.zzj.vo.Shangping" resultType="int">
+		select count(distinct s.spname) from spb s inner join splxb sb
+		on s.text=sb.id
+		<where>
+			<if test="spname!=null"> and spname like  concat('%',#{spname},'%')</if>
+			<if test="splx!=0 and splx!=null"> and s.text = #{splx}</if>
+			and s.zt=0
+		</where>
+	</select>
+	<select id="splx" parameterType="com.zzj.vo.Splx" resultType="Splx">
+		select * from splxb
+	</select>
+	<select id="spgys" parameterType="com.zzj.vo.Gys" resultType="Gys">
+		select * from gysb
+	</select>
+	<update id="spdel" parameterType="int">
+		update spb set zt=1 where spid=#{spid}
+	</update>
+	<insert id="spadd" parameterType="Shangping">
+		insert into spb values(null,#{spname},#{gid},#{splx},#{spscph},#{spms},#{price},0)
+	</insert>
+	<select id="spidcx" parameterType="int" resultMap="sp">
+		SELECT s.spid,s.spname,sb.text,s.spscph,s.spms,s.price,sp.gid,sb.id FROM spb s INNER JOIN splxb sb
+		ON s.text=sb.id INNER JOIN gysb sp ON s.gid=sp.gid where s.spid=#{spid} and s.zt=0
+	</select>
+	<update id="spxg" parameterType="Shangping">
+		update spb set spname=#{spname},text=#{splx},spscph=#{spscph},spms=#{spms},price=#{price} where spid=#{spid}
+	</update>
+	<select id="cgys" parameterType="com.zzj.vo.Shangping" resultType="Shangping">
+		SELECT sp.gname,s.price,s.gid FROM spb s INNER JOIN splxb sb ON s.text=sb.id INNER JOIN gysb sp ON s.gid=sp.gid
+		<where>
+			<if test="spname!=null"> and spname like  concat('%',#{spname},'%')</if>
+			<if test="gname!=null"> and sp.gname = #{gname}</if>
+			 and s.zt=0
+		</where>
+	</select>
+</mapper>

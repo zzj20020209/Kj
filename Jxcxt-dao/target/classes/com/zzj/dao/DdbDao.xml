@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.DdbDao">
+	<select id="ddbcx" parameterType="int" resultType="com.zzj.vo.Ddb">
+		SELECT d.ddid,s.spname,d.spjg,d.spsl FROM ddb d INNER JOIN spb s ON d.spid=s.spid where cgddid=#{cgddid}
+	</select>
+	<delete id="ddbdel" parameterType="int">
+		delete from ddb where ddid=#{ddid}
+	</delete>
+	<insert id="ddbadd" parameterType="Ddb">
+		insert into ddb values(#{cgddid},#{ddid},#{spid},#{spjg},#{spsl},0)
+	</insert>
+</mapper>

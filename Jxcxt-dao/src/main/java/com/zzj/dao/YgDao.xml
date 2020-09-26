@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.YgDao">
+	<select id="cx" parameterType="com.zzj.vo.YgVo" resultType="com.zzj.vo.YgVo">
+		select * from ygb
+		<where>
+			<if test="yname!=null"> and yname like  concat('%',#{yname},'%')</if>
+			<if test="sex!=null"> and sex like concat('%', #{sex},'%')</if>
+			 and jyzt=0
+		</where>
+	</select>
+
+	<select id="cxsy" parameterType="com.zzj.vo.YgVo" resultType="int">
+		select count(*) from ygb
+		<where>
+			<if test="yname!=null"> and yname like  concat('%',#{yname},'%')</if>
+			<if test="sex!=null"> and sex like concat('%', #{sex},'%')</if>
+			 and jyzt=0
+		</where>
+	</select>
+	<select id="dl" parameterType="com.zzj.vo.YgVo" resultType="com.zzj.vo.YgVo">
+		select * from ygb where yname=#{yname} and password=#{password} and jyzt=0
+	</select>
+	<insert id="add" parameterType="YgVo">
+		insert into ygb values(null,#{yname},#{password},#{sfz},#{sex},#{telephone},#{mailbox},#{ygdz},0)
+	</insert>
+	<update id="del" parameterType="int" >
+		update ygb set jyzt=1 where yid=#{yid}
+	</update>
+	<select id="idcx" parameterType="int" resultType="YgVo">
+		select * from ygb where yid=#{yid} and jyzt=0
+	</select>
+	<update id="xg" parameterType="YgVo" >
+		update ygb set yname=#{yname},password=#{password},sfz=#{sfz},sex=#{sex},telephone=#{telephone},mailbox=#{mailbox},ygdz=#{ygdz} where yid=#{yid}
+	</update>
+</mapper>

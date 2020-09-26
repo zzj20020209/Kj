@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzj.dao.CgljDao">
+	<select id="cx" parameterType="com.zzj.vo.Cglj" resultType="com.zzj.vo.Cglj">
+		SELECT * FROM cgljb
+	</select>
+
+	<select id="cxsy" parameterType="com.zzj.vo.Cglj" resultType="int">
+		select count(*) from cgljb
+	</select>
+
+	<insert id="add" parameterType="Cglj" >
+		insert into cgljb values(#{cgddid},#{bz},#{yname},#{cgsj},#{cgdsj},#{zjg},0,0,0,0)
+	</insert>
+	<update id="zjghq" parameterType="int" >
+		update cgljb set zjg=(SELECT SUM(spjg*spsl) FROM ddb WHERE cgddid=#{cgddid}) where cgddid=#{cgddid}
+	</update>
+	<select id="csl" parameterType="int" resultType="Cglj">
+		SELECT SUM(spsl) FROM ddb WHERE cgddid=#{cgddid}
+	</select>
+	<delete id="del" parameterType="int">
+		delete from cgljb where cgddid=#{cgddid}
+	</delete>
+	<delete id="dddel" parameterType="int">
+		delete from ddb where cgddid=#{cgddid}
+	</delete>
+	<update id="ty" parameterType="int">
+		update cgljb set zt=1 where cgddid=#{cgddid}
+	</update>
+	<update id="jj" parameterType="int">
+		update cgljb set zt=2 where cgddid=#{cgddid}
+	</update>
+	<select id="idcx" parameterType="int" resultType="Cglj">
+		select * from cgljb where cgddid=#{cgddid}
+	</select>
+	<update id="xgcgsj" parameterType="Cglj" >
+		update cgljb set cgdsj=#{cgdsj} where cgddid=#{cgddid}
+	</update>
+</mapper>
